@@ -1,0 +1,129 @@
+
+We intend to create extrators while will fetch data from the state, from the counties and from the municiplaties of
+California that publish camplaign finance and lobbying activity data in some electronic form.
+
+The list of entities we are concerned with is here, so that we may track what may be know about each of them.
+
+State of California:
+http://www.sos.ca.gov/prd/cal-access/ - Raw Data for Campaign Finance and Lobbying Activity
+Extractor created. Contact: rkiddy
+
+Counties:
+
+Alameda:
+
+Alpine:
+
+Amador:
+
+Butte:
+
+Calaveras:
+
+Colusa:
+
+Contra Costa:
+
+Del Norte:
+
+El Dorado:
+
+Fresno:
+
+Glenn:
+
+Humboldt:
+
+Imperial:
+
+Inyo:
+
+Kern:
+
+Kings:
+
+Lake:
+
+Lassen:
+
+Los Angeles:
+
+Madera:
+
+Marin:
+
+Mariposa:
+
+Mendocino:
+
+Merced:
+
+Modoc:
+
+Mono:
+
+Monterey:
+
+Napa:
+
+Nevada:
+
+Orange:
+
+Placer:
+
+Plumas:
+
+Riverside:
+
+Sacramento:
+
+San Benito:
+
+San Bernardino:
+
+San Diego:
+
+San Francisco:
+
+San Joaquin:
+
+San Luis Obispo:
+
+San Mateo:
+
+Santa Barbara:
+
+Santa Clara:
+
+Santa Cruz:
+
+Shasta:
+
+Sierra:
+
+Siskiyou:
+
+Solano:
+
+Sonoma:
+
+Stanislaus:
+
+Sutter:
+
+Tehama:
+
+Trinity:
+
+Tulare:
+
+Tuolumne:
+
+Ventura:
+
+Yolo:
+
+Yuba:
+
+

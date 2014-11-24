@@ -1,0 +1,41 @@
+#!/bin/sh
+
+d=`date '+%Y%m%d'`
+
+dir=data_$d
+
+if [ ! -d $dir ]; then
+    echo ""
+    echo "creating dir: \"data_$d\""
+    echo ""
+    mkdir $dir
+fi
+
+cd $dir
+
+if [ -f "ACRONYMS_CD.TSV" ]; then
+    echo ""
+    echo "Please delete all TSV files or move them to another location so they are not overriden"
+    echo ""
+    exit 0
+fi
+
+if [ ! -d doc_$d.zip ]; then
+    curl 'http://campaignfinance.cdn.sos.ca.gov/calaccess-documentation.zip' > doc_$d.zip
+fi
+
+if [ ! -d db_$d.zip ]; then
+    curl 'http://campaignfinance.cdn.sos.ca.gov/dbwebexport.zip' > db_$d.zip
+fi   
+
+unzip db_$d.zip
+
+cd CalAccess/DATA
+
+mv *TSV ../..
+
+cd ../..
+
+/bin/rm -rf CalAccess
+
+exit

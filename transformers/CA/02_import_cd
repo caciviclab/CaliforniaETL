@@ -1,0 +1,184 @@
+#!/usr/bin/perl
+
+require "options.pl";
+
+sub tableNameFromFile {
+    @p = split '\.', $_;
+    local $table = lc($p[0]);
+    return $table;
+}
+
+if (scalar(@ARGV) == 0) {
+    print "\nusage: ./01_import -date <YYYYMMDD> ( -all | <files> )\n\n";
+    exit(0);
+}
+
+my @files = ();
+
+for ($idx = 0; $idx < scalar(@ARGV); $idx++) {
+    $arg = $ARGV[$idx];
+
+    if ($arg eq "-all") { $allFiles = 1; }
+    if ($arg eq "-date") { $importDate = $ARGV[$idx+1]; $idx++; next; }
+    if ($arg =~ /\.TSV$/) { push @files, $arg; }
+    if ($arg eq "-v") { $verbose = 1; }
+}
+
+if ( ! defined($importDate)) {
+    print "\nNo -date parameter given.\n\n";
+    exit(0);
+}
+
+$inDir = "data_".$importDate;
+
+if (defined($allFiles)) {
+    $cmd = "( cd ".$inDir." ; /bin/ls -1 *_CD.TSV )";
+    @files = `$cmd`;
+    chomp(@files);
+}
+
+if ( ! defined($allFiles) && scalar(@files) == 0) {
+    print "\nNo files...\n\n";
+    exit(0);
+}
+
+if (&db_exists(&option("dbName")."_".$importDate) == 0) {
+    open M, "| ".$myNo;
+    print M "create database ".&option("dbName")."_".$importDate.";\n";
+    close M;
+}
+
+open M, "| ".$myV."_".$importDate;
+
+foreach (@files) {
+
+     $file = $_;
+
+     # Given "TEXT_MEMO_CD.TSV" in the data directory, this will now be "text_memo_cd".
+     #
+     $table = &tableNameFromFile($file);
+
+     if ( ! -f $inDir."/".$file ) {
+         print "\nERROR: Something wrong? Given a file that does not exist. Aborting.\n\n";
+         exit(1);
+     }
+
+     print M "-- file: ".$file."\n";
+
+     print M "-- table: ".$table."\n";
+
+     $cmd = &option("head")." -1 ".$inDir."/".$file;
+     $topLine = `$cmd`;
+     chomp($topLine);
+
+     @cols = split '\s', $topLine;
+
+     $sql = "create table ".$table." (";
+     $sql .= "pk int primary key,";
+     foreach (@cols) { $sql .= lc($_)." blob,"; }
+     $sql =~ s/,$//;
+     $sql .= ");";
+     print M "drop table if exists ".$table.";\n";
+     print M $sql."\n\n";
+}
+
+close M;
+
+open M, "| ".$myV."_".$importDate;
+
+foreach (@files) {
+
+    $file = $_;
+    $endFile = lc($file);
+
+    # Given "TEXT_MEMO_CD.TSV" in the data directory, this will now be "text_memo_cd".
+    #
+    $table = &tableNameFromFile($file);
+
+    if (defined($verbose)) { print "table: \"".$table."\"\n"; }
+
+    $pk = 1;
+
+    if (defined($verbose)) { print "open SQL_IN, ".$inDir."/".$file."\n"; }
+    open SQL_IN, $inDir."/".$file;
+
+    if (defined($verbose)) { print "open SQL_OUT, >".&option("tmpDir")."/".$endFile."\n"; }
+    open SQL_OUT, ">".&option("tmpDir")."/".$endFile;
+
+    $first = <SQL_IN>;
+    print SQL_OUT "pk\t".$first;
+
+    while (<SQL_IN>) {
+        $line = $_;
+        $line =~ s/ *\t/\t/g;
+
+        # This will handle the date columns.
+        #
+        while ($line =~ /\t([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4}) 12:00:00 AM\t/) {
+            $pre = $`;
+            $post = $';
+            $month = $1;
+            $day = $2;
+            $year = $3;
+            while (length($month) < 2) { $month = "0".$month; }
+            while (length($day) < 2) { $day = "0".$day; }
+            $line = $pre."\t".$year."-".$month."-".$day."\t".$post;
+        }
+
+        # This will handle the effect_dt column in the filername table, which does not have " 12:00:00 AM" after the date.
+        #
+        while ($line =~ /\t([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4})\t/) {
+            $pre = $`;
+            $post = $';
+            $month = $1;
+            $day = $2;
+            $year = $3;
+            while (length($month) < 2) { $month = "0".$month; }
+            while (length($day) < 2) { $day = "0".$day; }
+            $line = $pre."\t".$year."-".$month."-".$day."\t".$post;
+        }
+
+        # This will handle the datetime column in FILER_TO_FILER_TYPE.TSV, whyever it must be diferent.
+        #
+        while ($line =~ /\t([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4}) ([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2}) ([AP]M)\t/) {
+            $pre = $`;
+            $post = $';
+            $month = $1;
+            $day = $2;
+            $year = $3;
+            $hour = $4;
+            $minute = $5;
+            $second = $6;
+            $ampm = $7;
+            while (length($month) < 2) { $month = "0".$month; }
+            while (length($day) < 2) { $day = "0".$day; }
+            while (length($hour) < 2) { $hour = "0".$hour; }
+            while (length($minute) < 2) { $minute = "0".$minute; }
+            while (length($second) < 2) { $second = "0".$second; }
+            $line = $pre."\t".$year."-".$month."-".$day." ".$hour.":".$minute.":".$second." ".$ampm."\t".$post;
+        }
+
+        print SQL_OUT $pk."\t".$line;
+        $pk++;
+    }
+
+    close SQL_IN;
+    close SQL_OUT;
+
+    open M, "| ".&option("mysql")." -u ".&option("dbUser")." --password=".&option("dbPwd").
+            " -vvv --local-infile ".&option("dbName")."_".$importDate;
+
+    print M "set max_error_count=65535;\n";
+
+    $sql = "load data local infile '".&option("tmpDir")."/".$endFile."' into table ".$table." ".
+           "fields terminated by '\\t' lines terminated by '\\r\\n' ignore 1 lines;\n";
+
+    print M $sql;
+    print M "show warnings;\n";
+
+    close M;
+}
+
+print "\nDone!\n";
+
+exit(0);

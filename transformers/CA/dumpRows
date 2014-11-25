@@ -1,0 +1,121 @@
+#!/usr/bin/perl
+
+binmode STDIN, ':crlf';
+
+require "options.pl";
+
+if ( ! defined($ARGV[0])) {
+    print "\nusage: ./dumpRows [ -interval <lowerLineNumber> [ <upperLineNumber> ] ] [ -near <lineNumber> ] <file>\n\n";
+    exit(0);
+}
+
+sub idx_str {
+    if ($_[0] < 10) { return "  ".$_[0]; }
+    if ($_[0] < 100) { return " ".$_[0]; }
+    return $_[0];
+}
+
+for ($idx = 0; $idx < scalar(@ARGV); $idx++) {
+
+    if ($ARGV[$idx] eq "-interval") {
+
+        $lower = $ARGV[$idx+1];
+        $upper = $ARGV[$idx+2];
+        $idx += 2;
+        next;
+    }
+
+    if ($ARGV[$idx] eq "-near") {
+
+        $lower = $ARGV[$idx+1] - 2;
+        $upper = $ARGV[$idx+1] + 2;
+        $idx += 1;
+        next;
+    }
+
+    if ($ARGV[$idx] !~ /^\-/) { push @files, $ARGV[$idx]; }
+}
+
+if ( ! defined($files[0])) { print "\nERROR: Cannot find a file in call to script.\n\n"; exit(1); }
+
+{
+    # read column headings
+
+    open F, $files[0];
+
+    $line = <F>;
+    chomp($line);
+    $line =~ s/\r//;
+
+    @heads = split '\t', $line, -1;
+
+    # print "heads:\n".(join "\n    ", @heads)."\n\n";
+
+    $expected = scalar(@heads);
+}
+
+print "upper: ".$upper.", lower: ".$lower."\n";
+
+foreach (@files) {
+
+    $file = $_;
+
+    undef %counts;
+
+    if ( ! -f $file) {
+        print "Cannot find file: \"".$file."\"\n";
+        next;
+    }
+
+    open F, $file;
+
+    print "\n".$file.":\n\n";
+
+    if ( ! defined($columnsFile)) { $throwAwayLine = <F>; $lineNumber = 1; } else { $lineNumber = 0; }
+
+    while (<F>) {
+        chomp;
+
+        $line = $_;
+
+        $lineNumber++;
+
+        chomp(@line);
+        $line =~ s/\r//;
+
+        if ( $lineNumber >= $lower && $lineNumber <= $upper ) {
+
+            @data = split "\t", $line, -1;
+
+            if (scalar(@data) != $expected) {
+
+                print "\nLINE # ".$lineNumber.":\n\n";
+
+                for ($jdx = 0; $jdx < scalar(@data); $jdx++) {
+
+                    if ( ! defined($heads[$jdx])) {
+                        print &idx_str($jdx)." BOGUS: \"".$data[$jdx]."\"\n";
+                    } else {
+                        print &idx_str($jdx)." ".$heads[$jdx].": \"".$data[$jdx]."\"\n";
+                    }
+                }
+                for ($jdx = scalar(@data); $jdx < scalar(@heads); $jdx++) {
+                        print &idx_str($jdx)." ".$heads[$jdx].": MISSING DATA\n";
+                }
+            } else {
+
+                for (local $jdx = 0; $jdx < scalar(@data); $jdx++) {
+                    print &idx_str($jdx)." ".$heads[$jdx].": \"".$data[$jdx]."\"\n";
+                }
+            }
+
+            print "\n";
+        }
+    }
+
+    foreach (sort { $a <=> $b } keys %counts) { print "cols # ".$_.", rows # ".$counts{$_}."\n"; }
+
+    print "\n";
+}
+
+exit(0);

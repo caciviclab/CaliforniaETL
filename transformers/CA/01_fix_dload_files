@@ -68,6 +68,19 @@ sub remove_field {
     return @next;
 }
 
+sub remove_fields {
+    $atFieldNumber = $_[0];
+    $numberToRemove = $_[1];
+    local @q = @_;
+    shift @q; shift @q;
+
+    undef @next;
+    for ($idx = 0; $idx < scalar(@q); $idx++) {
+        if (($idx < $atFieldNumber) || ($idx > ($atFieldNumber + $numberToRemove - 1))) { push @next, $q[$idx]; }
+    }
+    return @next;
+}
+
 sub add_empty_field_at_end {
     local @q = @_;
     undef @next;
@@ -213,6 +226,28 @@ if (defined($allFiles) || defined($files{$file})) {
         #
         if ($line =~ /^1212884\t/ && $line =~ /\tOakland\tAC\t/) { $line =~ s/\tOakland\tAC\t/\tOakland\tCA\t/; }
         if ($line =~ /^1218926\t/ && $line =~ /\tOakland\tAC\t/) { $line =~ s/\tOakland\tAC\t/\tOakland\tCA\t/; }
+
+        if ($line =~ /^591440\t/ && scalar(@p) > 97) {
+            @p = &remove_fields(60, 12, @p);
+            $line = join "\t", @p;
+        }
+
+        if ($line =~ /^591313\t/ && scalar(@p) >112) {
+            @p = &remove_fields(60, 27, @p);
+            $line = join "\t", @p;
+        }
+
+        # These, for some reason, just have 3 extra tabs.
+        #
+        if (($line =~ /^1172839\t/ || $line =~ /^1346256\t/ || $line =~ /^591205\t/) && scalar(@p) > 88) {
+            @p = &remove_fields(60, 3, @p);
+            $line = join "\t", @p;
+        }
+
+        if ($line =~ /^1852507\t/ && scalar(@p) > 87) {
+            @p = &remove_fields(60, 2, @p);
+            $line = join "\t", @p;
+        }
 
         print F2 $line;
     }

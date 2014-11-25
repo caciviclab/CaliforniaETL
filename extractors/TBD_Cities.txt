@@ -5,8 +5,7 @@ California that publish camplaign finance and lobbying activity data in some ele
 The list of entities we are concerned with is here, so that we may track what may be know about each of them.
 
 State of California:
-http://www.sos.ca.gov/prd/cal-access/ - Raw Data for Campaign Finance and Lobbying Activity
-Extractor created. Contact: rkiddy
+http://www.sos.ca.gov/prd/cal-access/ - Raw Data for Campaign Finance and Lobbying Activity, extractor created
 
 Municipalities:
 
@@ -29,6 +28,7 @@ Amador City:
 American Canyon:
 
 Anaheim:
+http://nf4.netfile.com/pub2/%28S%28biepwh551bjr1pjzlrwghqzo%29%29/Default.aspx?aid=ANA
 
 Anderson:
 
@@ -85,6 +85,7 @@ Belvedere:
 Benicia:
 
 Berkeley:
+http://nf4.netfile.com/pub/?aid=BRK
 
 Beverly Hills:
 
@@ -181,6 +182,7 @@ Colfax:
 Colma:
 
 Colton:
+http://nf4.netfile.com/pub2/Default.aspx?aid=COL
 
 Colusa:
 
@@ -203,6 +205,7 @@ Corte Madera:
 Costa Mesa:
 
 Cotati:
+http://nf4.netfile.com/pub2/?AID=cot
 
 Covina:
 
@@ -311,6 +314,7 @@ Fowler:
 Fremont:
 
 Fresno:
+http://nf4.netfile.com/pub2/Default.aspx?aid=COF
 
 Fullerton:
 
@@ -377,6 +381,7 @@ Holtville:
 Hughson:
 
 Huntington Beach:
+http://nf4.netfile.com/pub2/Default.aspx?aid=CHB
 
 Huntington Park:
 
@@ -631,6 +636,7 @@ Paramount:
 Parlier:
 
 Pasadena:
+http://ww2.cityofpasadena.net/councilagendas/2014%20Agendas/Oct_06_14/AR%203.ppt Presentation to City Council proposing conract with NetFile, Oct 4, 2014.
 
 Paso Robles:
 
@@ -657,6 +663,7 @@ Placerville:
 Pleasant Hill:
 
 Pleasanton:
+http://nf4.netfile.com/pub2/Default.aspx?aid=COP
 
 Plymouth:
 
@@ -699,6 +706,7 @@ Reedley:
 Rialto:
 
 Richmond:
+http://www.ci.richmond.ca.us/index.aspx?nid=1439 - looks like a city-built site
 
 Ridgecrest:
 
@@ -731,6 +739,7 @@ Salinas:
 San Anselmo:
 
 San Bernardino:
+http://nf4.netfile.com/pub2/Default.aspx?aid=CSBN
 
 San Bruno:
 
@@ -775,8 +784,10 @@ Sanger:
 Santa Ana:
 
 Santa Barbara:
+http://nf4.netfile.com/pub2/Default.aspx?aid=CSB
 
 Santa Clara:
+http://nf4.netfile.com/pub2/?aid=CSC
 
 Santa Clarita:
 
@@ -787,10 +798,12 @@ Santa Fe Springs:
 Santa Maria:
 
 Santa Monica:
+http://nf4.netfile.com/pub2/%28S%28vket5a45gv5aleurxl4jub2f%29%29/Default.aspx?aid=CSM
 
 Santa Paula:
 
 Santa Rosa:
+http://nf4.netfile.com/pub2/Default.aspx?aid=CSR
 
 Santee:
 
@@ -847,6 +860,7 @@ Stockton:
 Suisun City:
 
 Sunnyvale:
+http://nf4.netfile.com/pub2/Default.aspx?aid=COS
 
 Susanville:
 
@@ -895,6 +909,7 @@ Vacaville:
 Vallejo:
 
 Ventura:
+http://nf4.netfile.com/pub2/Default.aspx?aid=cov
 
 Vernon:
 

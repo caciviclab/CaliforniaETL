@@ -5,8 +5,7 @@ California that publish camplaign finance and lobbying activity data in some ele
 The list of entities we are concerned with is here, so that we may track what may be know about each of them.
 
 State of California:
-http://www.sos.ca.gov/prd/cal-access/ - Raw Data for Campaign Finance and Lobbying Activity
-Extractor created. Contact: rkiddy
+http://www.sos.ca.gov/prd/cal-access/ - Raw Data for Campaign Finance and Lobbying Activity, extractor created.
 
 Counties:
 
@@ -47,6 +46,7 @@ Lake:
 Lassen:
 
 Los Angeles:
+There are reports that LA county is using NetFile but I cannot find anything on their web site. -rrk 2014/11/24
 
 Madera:
 
@@ -69,6 +69,7 @@ Napa:
 Nevada:
 
 Orange:
+http://nf4.netfile.com/pub2/?aid=coc
 
 Placer:
 

@@ -1,0 +1,79 @@
+#!/bin/sh
+
+# ray@ganymede.org - 2015/02/26
+#
+# This is only downloading the data which is from the FPPC forms which SF requires to be filed.
+#
+# If anyone wants to download and transform the SF-only data, please add that.
+#
+# Also, it would be smarter to access the list of tables published by SF via the JSON API at
+# https://data.sfgov.org/resource/h4ui-ubbu.json, look at the names, find all the tables
+# whose name contains the string "-FFPC-", check the last updated date, and use the "id" to
+# construct the download URL.
+#
+# I am not feeling that smart right now. Please feel free to re-write.
+
+
+d=`date '+%Y%m%d'`
+
+dir=data_$d
+
+if [ ! -d $dir ]; then
+    echo ""
+    echo "creating dir: \"data_$d\""
+    echo ""
+    mkdir $dir
+fi
+
+cd $dir
+
+curl -s 'https://data.sfgov.org/resource/4tts-fyix.json' > Campaign-Finance-FPPC-Form-460-Summary-Totals_4tts-fyix.json
+curl -s 'https://data.sfgov.org/resource/q66q-d2tr.json' > Campaign-Finance-FPPC-Form-460-Schedule-A-Monetary_q66q-d2tr.json
+curl -s 'https://data.sfgov.org/resource/ix6h-jjt5.json' > Campaign-Finance-FPPC-Form-460-Schedule-A-Monetary_ix6h-jjt5.json
+curl -s 'https://data.sfgov.org/resource/ypjd-hbxv.json' > Campaign-Finance-FPPC-Form-460-Schedule-A-Monetary_ypjd-hbxv.json
+curl -s 'https://data.sfgov.org/resource/88si-ckw4.json' > Campaign-Finance-FPPC-Form-460-Schedule-A-Monetary_88si-ckw4.json
+curl -s 'https://data.sfgov.org/resource/q68g-gg9j.json' > Campaign-Finance-FPPC-Form-460-Schedule-A-Monetary_q68g-gg9j.json
+curl -s 'https://data.sfgov.org/resource/psi3-zff2.json' > Campaign-Finance-FPPC-Form-460-Schedule-A-Monetary_psi3-zff2.json
+curl -s 'https://data.sfgov.org/resource/gebq-k4re.json' > Campaign-Finance-FPPC-Form-460-Schedule-A-Monetary_gebq-k4re.json
+curl -s 'https://data.sfgov.org/resource/tr8k-7cit.json' > Campaign-Finance-FPPC-Form-460-Schedule-F-Accrued-_tr8k-7cit.json
+curl -s 'https://data.sfgov.org/resource/nssf-6fc9.json' > Campaign-Finance-FPPC-Form-496-Late-Independent-Ex_nssf-6fc9.json
+curl -s 'https://data.sfgov.org/resource/hu64-n42u.json' > Campaign-Finance-FPPC-Form-460-Schedule-A-Monetary_hu64-n42u.json
+curl -s 'https://data.sfgov.org/resource/gz8r-ag83.json' > Campaign-Finance-FPPC-Form-465-Supplemental-Indepe_gz8r-ag83.json
+curl -s 'https://data.sfgov.org/resource/tuhn-kmfd.json' > Campaign-Finance-FPPC-Form-460-Schedule-A-Monetary_tuhn-kmfd.json
+curl -s 'https://data.sfgov.org/resource/4vqi-vw9j.json' > Campaign-Finance-FPPC-Form-460-Schedule-A-Monetary_4vqi-vw9j.json
+curl -s 'https://data.sfgov.org/resource/xdap-cuq4.json' > Campaign-Finance-FPPC-Form-497-Late-Contribution-R_xdap-cuq4.json
+curl -s 'https://data.sfgov.org/resource/2d8w-re65.json' > Campaign-Finance-FPPC-Form-496-Late-Independent-Ex_2d8w-re65.json
+curl -s 'https://data.sfgov.org/resource/xfbk-xt8m.json' > Campaign-Finance-FPPC-Form-460-Schedule-A-Monetary_xfbk-xt8m.json
+curl -s 'https://data.sfgov.org/resource/2rkr-tigs.json' > Campaign-Finance-FPPC-Form-460-Schedule-A-Monetary_2rkr-tigs.json
+curl -s 'https://data.sfgov.org/resource/2c53-tt65.json' > Campaign-Finance-FPPC-Form-460-Schedule-A-Cumulati_2c53-tt65.json
+curl -s 'https://data.sfgov.org/resource/jdwx-3v9h.json' > Campaign-Finance-FPPC-Form-460-Schedule-A-Monetary_jdwx-3v9h.json
+curl -s 'https://data.sfgov.org/resource/swdn-y66i.json' > Campaign-Finance-FPPC-Form-460-Schedule-A-Monetary_swdn-y66i.json
+curl -s 'https://data.sfgov.org/resource/2qby-7vr8.json' > Campaign-Finance-FPPC-Form-460-Schedule-A-Monetary_2qby-7vr8.json
+curl -s 'https://data.sfgov.org/resource/i8us-xn7t.json' > Campaign-Finance-FPPC-Form-460-Schedule-D-Summary-_i8us-xn7t.json
+curl -s 'https://data.sfgov.org/resource/hc26-j9if.json' > Campaign-Finance-FPPC-Form-460-Schedule-E-Payments_hc26-j9if.json
+curl -s 'https://data.sfgov.org/resource/xz2h-gdpn.json' > Campaign-Finance-FPPC-Form-460-Schedule-A-Monetary_xz2h-gdpn.json
+curl -s 'https://data.sfgov.org/resource/4fd4-wqps.json' > Campaign-Finance-FPPC-Form-496-Late-Independent-Ex_4fd4-wqps.json
+curl -s 'https://data.sfgov.org/resource/7dnj-v8wi.json' > Campaign-Finance-FPPC-Form-460-Schedule-A-Monetary_7dnj-v8wi.json
+curl -s 'https://data.sfgov.org/resource/artm-n8we.json' > Campaign-Finance-FPPC-Form-496-Late-Independent-Ex_artm-n8we.json
+curl -s 'https://data.sfgov.org/resource/tej5-3ex3.json' > Campaign-Finance-FPPC-Form-460-Schedule-A-Monetary_tej5-3ex3.json
+curl -s 'https://data.sfgov.org/resource/86nq-bynj.json' > Campaign-Finance-FPPC-Form-461-Major-Donor-and-Ind_86nq-bynj.json
+curl -s 'https://data.sfgov.org/resource/6iqh-u3hk.json' > Campaign-Finance-FPPC-Form-460-Schedule-G-Payments_6iqh-u3hk.json
+curl -s 'https://data.sfgov.org/resource/k76b-4yme.json' > Campaign-Finance-FPPC-Form-460-Schedule-C-Non-Mone_k76b-4yme.json
+curl -s 'https://data.sfgov.org/resource/pyxa-3r7p.json' > Campaign-Finance-FPPC-Form-465-Supplemental-Indepe_pyxa-3r7p.json
+curl -s 'https://data.sfgov.org/resource/4phr-3hrm.json' > Campaign-Finance-FPPC-Form-460-Schedule-B1-Loans-R_4phr-3hrm.json
+curl -s 'https://data.sfgov.org/resource/en3f-97ps.json' > Campaign-Finance-FPPC-Form-496-Late-Independent-Ex_en3f-97ps.json
+curl -s 'https://data.sfgov.org/resource/yd59-3ads.json' > Campaign-Finance-FPPC-Form-460-Schedule-E-Payments_yd59-3ads.json
+curl -s 'https://data.sfgov.org/resource/6ssu-ewuc.json' > Campaign-Finance-FPPC-Form-460-Schedule-I-Miscella_6ssu-ewuc.json
+curl -s 'https://data.sfgov.org/resource/xgqc-ewpu.json' > Campaign-Finance-FPPC-Form-496-Late-Independent-Ex_xgqc-ewpu.json
+curl -s 'https://data.sfgov.org/resource/p4sp-es3b.json' > Campaign-Finance-FPPC-Form-496-Late-Independent-Ex_p4sp-es3b.json
+curl -s 'https://data.sfgov.org/resource/9g58-fcge.json' > Campaign-Finance-FPPC-Form-496-Late-Independent-Ex_9g58-fcge.json
+curl -s 'https://data.sfgov.org/resource/62ex-d3qk.json' > Campaign-Finance-FPPC-Form-460-Schedule-H-Loans-Ma_62ex-d3qk.json
+curl -s 'https://data.sfgov.org/resource/ec3y-6ty9.json' > Campaign-Finance-FPPC-Form-460-Schedule-B2-Loan-Gu_ec3y-6ty9.json
+curl -s 'https://data.sfgov.org/resource/y5re-ciw2.json' > Campaign-Finance-FPPC-Form-460-Schedule-E-Payments_y5re-ciw2.json
+curl -s 'https://data.sfgov.org/resource/48bp-mn2p.json' > Campaign-Finance-FPPC-Form-460-Schedule-E-Payments_48bp-mn2p.json
+curl -s 'https://data.sfgov.org/resource/iz9y-rm2f.json' > Campaign-Finance-FPPC-Form-496-Late-Independent-Ex_iz9y-rm2f.json
+curl -s 'https://data.sfgov.org/resource/3p57-7ri7.json' > Campaign-Finance-FPPC-Form-460-Schedule-E-Payments_3p57-7ri7.json
+curl -s 'https://data.sfgov.org/resource/y7rx-jg8p.json' > Campaign-Finance-FPPC-Form-496-Late-Independent-Ex_y7rx-jg8p.json
+curl -s 'https://data.sfgov.org/resource/8pzk-ykqy.json' > Campaign-Finance-FPPC-Form-496-Late-Independent-Ex_8pzk-ykqy.json
+
+exit
